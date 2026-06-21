@@ -1,0 +1,100 @@
+@import "tailwindcss";
+
+:root {
+  --bg-base: #0E1110;
+  --bg-card: #161A19;
+  --border-subtle: #2A2F2E;
+  --text-primary: #EDEAE2;
+  --text-muted: #8B928F;
+  --accent-amber: #E8A33D;
+  --accent-amber-dim: #B8822E;
+  --accent-weak: #D9685C;
+  --accent-strong: #6FCF97;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  background: var(--bg-base);
+  color: var(--text-primary);
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+::selection {
+  background: var(--accent-amber);
+  color: var(--bg-base);
+}
+
+.font-mono-display {
+  font-family: var(--font-mono);
+}
+
+.font-sans-body {
+  font-family: var(--font-sans);
+}
+
+/* ---- Polish layer ---- */
+
+.bg-grain {
+  background-image: radial-gradient(circle at 1px 1px, rgba(237,234,226,0.035) 1px, transparent 0);
+  background-size: 24px 24px;
+}
+
+.glow-amber {
+  box-shadow: 0 0 0 1px rgba(232,163,61,0.25), 0 8px 32px -8px rgba(232,163,61,0.15);
+}
+
+.glow-strong {
+  box-shadow: 0 0 0 1px rgba(111,207,151,0.3), 0 8px 32px -8px rgba(111,207,151,0.25);
+}
+
+.glow-weak {
+  box-shadow: 0 0 0 1px rgba(217,104,92,0.3), 0 8px 32px -8px rgba(217,104,92,0.2);
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-up {
+  animation: fadeUp 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes scoreReveal {
+  0% { opacity: 0; transform: scale(0.85); }
+  60% { transform: scale(1.04); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+.animate-score-reveal {
+  animation: scoreReveal 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes traceIn {
+  from { opacity: 0; transform: translateX(-6px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.animate-trace-in {
+  animation: traceIn 0.3s ease-out both;
+}
+
+@keyframes progressGlow {
+  0%, 100% { box-shadow: 0 0 8px rgba(232,163,61,0.6); }
+  50% { box-shadow: 0 0 16px rgba(232,163,61,0.9); }
+}
+
+.progress-glow {
+  animation: progressGlow 2s ease-in-out infinite;
+}
