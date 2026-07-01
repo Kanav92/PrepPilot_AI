@@ -8,8 +8,9 @@ Built as a portfolio project demonstrating real multi-agent orchestration, state
 
 ## Screenshots
 
-### Resume Upload — skills and projects extracted from your real PDF
+### Resume Upload — skills, projects and experience extracted from your real PDF
 ![Resume Upload](screenshots/Resume_page.png)
+
 
 
 ### Interview Screen — live agent trace sidebar updating in real time
