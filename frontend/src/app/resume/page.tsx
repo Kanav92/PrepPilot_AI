@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { Terminal, Upload, FileText, ArrowRight, LogOut, CheckCircle2 } from "lucide-react";
+import { Terminal, Upload, FileText, ArrowRight, LogOut, CheckCircle2, Briefcase } from "lucide-react";
 import api, { ResumeData } from "@/lib/api";
 
 export default function ResumePage() {
@@ -55,6 +55,8 @@ export default function ResumePage() {
     router.push("/login");
   };
 
+  const experience = (result?.parsed_data as any)?.experience || [];
+
   return (
     <div className="h-screen bg-[var(--bg-base)] bg-grain text-[var(--text-primary)] flex flex-col overflow-hidden">
       <nav className="flex items-center justify-between px-8 py-5 border-b border-[var(--border-subtle)] shrink-0">
@@ -77,7 +79,7 @@ export default function ResumePage() {
           </div>
           <h1 className="font-mono-display text-2xl font-semibold mb-1">Upload your resume</h1>
           <p className="text-[var(--text-muted)] text-sm mb-5 leading-relaxed">
-            We&apos;ll extract your skills and projects so the interview can ask you about real things you&apos;ve built.
+            We&apos;ll extract your skills, projects, and work experience so the interview covers what you&apos;ve actually built.
           </p>
         </div>
 
@@ -130,7 +132,6 @@ export default function ResumePage() {
               Resume analyzed successfully
             </div>
 
-            {/* Scrollable inner content — page itself never scrolls */}
             <div className="flex-1 overflow-y-auto px-6 py-5">
               <div className="mb-6">
                 <div className="text-xs text-[var(--text-muted)] uppercase tracking-widest mb-3 font-medium">
@@ -138,15 +139,31 @@ export default function ResumePage() {
                 </div>
                 <div className="flex flex-wrap gap-2">
                   {result.parsed_data.skills.map((s, i) => (
-                    <span
-                      key={i}
-                      className="text-xs bg-[var(--bg-base)] border border-[var(--border-subtle)] rounded px-2.5 py-1.5"
-                    >
+                    <span key={i} className="text-xs bg-[var(--bg-base)] border border-[var(--border-subtle)] rounded px-2.5 py-1.5">
                       {s}
                     </span>
                   ))}
                 </div>
               </div>
+
+              {experience.length > 0 && (
+                <div className="mb-6">
+                  <div className="text-xs text-[var(--text-muted)] uppercase tracking-widest mb-3 font-medium flex items-center gap-2">
+                    <Briefcase size={12} />
+                    Work experience ({experience.length})
+                  </div>
+                  <div className="space-y-3">
+                    {experience.map((e: any, i: number) => (
+                      <div key={i} className="bg-[var(--bg-base)] border border-[var(--accent-amber)]/20 rounded-md p-3.5">
+                        <div className="font-medium text-sm mb-0.5">{e.role}
+                          <span className="text-[var(--accent-amber)] font-normal"> @ {e.company}</span>
+                        </div>
+                        <div className="text-[var(--text-muted)] text-xs leading-relaxed">{e.description}</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
 
               <div>
                 <div className="text-xs text-[var(--text-muted)] uppercase tracking-widest mb-3 font-medium">
@@ -163,7 +180,6 @@ export default function ResumePage() {
               </div>
             </div>
 
-            {/* CTA always inside the card, always visible */}
             <div className="shrink-0 p-6 pt-4 border-t border-[var(--border-subtle)]">
               <button
                 onClick={() => router.push("/interview")}

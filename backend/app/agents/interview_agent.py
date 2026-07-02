@@ -28,8 +28,18 @@ def interview_node(state: InterviewState) -> dict:
     scores = state.get("scores", [])
     resume_data = state.get("resume_data", {})
     projects = resume_data.get("projects", [])
+    experience = resume_data.get("experience", [])
     questions_asked = state.get("questions", [])
     tool_types_used = state.get("tool_types_used", [])
+
+    # Combine projects and experience into one pool for project-type questions
+    all_context_items = projects + [
+        {
+            "name": f"{e.get('role', '')} at {e.get('company', '')}",
+            "description": e.get("description", "")
+        }
+        for e in experience
+    ]
 
     print(f"[InterviewAgent] Deciding next question (idx: {idx})...")
 
@@ -53,8 +63,8 @@ def interview_node(state: InterviewState) -> dict:
     can_do_followup = last_tool_type != "followup"
 
     questions_remaining = MAX_QUESTIONS - idx
-    project_questions_still_needed = max(0, min(MIN_PROJECT_QUESTIONS, len(projects)) - project_questions_asked)
-    must_force_project = projects and project_questions_still_needed >= questions_remaining
+    project_questions_still_needed = max(0, min(MIN_PROJECT_QUESTIONS, len(all_context_items)) - project_questions_asked)
+    must_force_project = all_context_items and project_questions_still_needed >= questions_remaining
 
     asked_bank_ids = [str(q.get("id")) for q in questions_asked if q.get("id") is not None]
     asked_project_questions = [q.get("question_text", "") for q in questions_asked if q.get("topic") == "PROJECT"]
@@ -63,8 +73,8 @@ def interview_node(state: InterviewState) -> dict:
         tool_type = "followup"
         next_topic = last_topic
     elif must_force_project or (
-        projects
-        and project_questions_asked < min(MIN_PROJECT_QUESTIONS, len(projects))
+        all_context_items
+        and project_questions_asked < min(MIN_PROJECT_QUESTIONS, len(all_context_items))
         and idx > 0
         and idx % 3 == 0
     ):
@@ -88,16 +98,16 @@ def interview_node(state: InterviewState) -> dict:
 - topic: "{next_topic}" """
 
     elif tool_type == "project":
-        project = projects[project_questions_asked % len(projects)]
-        exclude_str = " | ".join(asked_project_questions)
+        item = all_context_items[project_questions_asked % len(all_context_items)]
+        exclude_str = " | ".join(asked_project_questions) if asked_project_questions else ""
         user_msg = f"""Call generate_project_question with:
-- project_name: "{project['name']}"
-- project_description: "{project['description']}"
+- project_name: "{item['name']}"
+- project_description: "{item['description']}"
 - difficulty: "{difficulty}"
 - exclude_questions: "{exclude_str}" """
 
     else:
-        exclude_str = ",".join(asked_bank_ids)
+        exclude_str = ",".join(asked_bank_ids) if asked_bank_ids else ""
         user_msg = f"""Call fetch_question_from_bank with:
 - topic: "{next_topic}"
 - difficulty: "{difficulty}"
