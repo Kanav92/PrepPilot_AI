@@ -87,6 +87,16 @@ Before scoring an answer, the Evaluation Agent retrieves a reference explanation
 
 ---
 
+## Live Demo
+
+- **Frontend:** https://prep-pilot-ai-xi.vercel.app
+- **Backend API:** https://preppilot-backend-5wkw.onrender.com
+- **API Docs:** https://preppilot-backend-5wkw.onrender.com/docs
+
+> Note: The backend runs on Render's free tier and may take 30-60 seconds to wake up after inactivity. Open the app a minute before demoing.
+
+---
+
 ## Running it locally
 
 **Requirements:** Python 3.11+, Node.js 18+, PostgreSQL, a free Groq API key from [console.groq.com](https://console.groq.com)
