@@ -9,15 +9,18 @@ Built as a portfolio project demonstrating real multi-agent orchestration, state
 ## Screenshots
 
 ### Resume Upload — skills, projects and experience extracted from your real PDF
+
 ![Resume Upload](screenshots/Resume_page.png)
 
 
 
 ### Interview Screen — live agent trace sidebar updating in real time
+
 ![Interview Screen](screenshots/Interview_page.png)
 
 
 ### Results Page — topic breakdown, scores, and planner recommendations
+
 ![Results Page](screenshots/Result_page.png)
 
 ---
@@ -140,7 +143,7 @@ Visit `http://localhost:3000` (or whatever port it prints).
 
 ## What I'd add next
 
-- Deployment (Vercel + Railway)
+- Deployment (Vercel + Render)
 - Automated tests around the agent decision logic
 - Company-specific interview modes (Amazon SDE, Google SWE, etc. — prompt-template variants)
 - Rate limiting on LLM calls
