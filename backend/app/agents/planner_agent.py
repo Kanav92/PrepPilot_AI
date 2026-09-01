@@ -58,7 +58,7 @@ Return ONLY valid JSON, no explanation, no markdown:
 Make recommendations specific and actionable. Prioritize weakest topics."""
 
     response = client.chat.completions.create(
-        model="llama-3.3-70b-versatile",
+        model="qwen-qwq-32b",
         messages=[{"role": "user", "content": prompt}],
         max_tokens=500
     )

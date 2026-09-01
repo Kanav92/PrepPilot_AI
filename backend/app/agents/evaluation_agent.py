@@ -58,7 +58,7 @@ Return ONLY this JSON, no markdown, no explanation:
 }}"""
 
     response = client.chat.completions.create(
-        model="llama-3.3-70b-versatile",
+        model="qwen-qwq-32b",
         messages=[{"role": "user", "content": prompt}],
         max_tokens=300
     )
