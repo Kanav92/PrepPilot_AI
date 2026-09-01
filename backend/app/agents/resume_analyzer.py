@@ -48,7 +48,7 @@ Resume:
 Return only the raw JSON object, no code fences, no backticks."""
 
     response = client.chat.completions.create(
-        model="qwen-qwq-32b",
+        model="openai/gpt-oss-120b",
         messages=[{"role": "user", "content": prompt}],
         max_tokens=800
     )
