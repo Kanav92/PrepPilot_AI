@@ -58,7 +58,7 @@ Return ONLY this JSON, no markdown, no explanation:
 }}"""
 
     response = client.chat.completions.create(
-        model="openai/gpt-oss-120b",
+        model="llama-3.1-8b-instant",
         messages=[{"role": "user", "content": prompt}],
         max_tokens=300
     )

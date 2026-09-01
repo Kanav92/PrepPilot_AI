@@ -86,7 +86,7 @@ def interview_node(state: InterviewState) -> dict:
 
     llm = ChatGroq(
         api_key=os.getenv("GROQ_API_KEY"),
-        model="openai/gpt-oss-120b"
+        model="llama-3.1-8b-instant"
     ).bind_tools(tools)
 
     system_prompt = "You are an interview question selector. Call exactly the tool specified. No text responses."
